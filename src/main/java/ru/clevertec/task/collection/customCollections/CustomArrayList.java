@@ -204,8 +204,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 
             @Override
             public boolean hasNext() {
-//                return currentIndex < size && massiveObjects[currentIndex] != null;
-                return false;
+                return currentIndex < size && massiveObjects[currentIndex] != null;
             }
 
             @Override
