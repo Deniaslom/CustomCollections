@@ -2,6 +2,7 @@ package ru.clevertec.task.collection.customCollections.interfaces;
 
 public interface CustomList<E> {
 
+    void show();
     int size();
     boolean isEmpty();
     boolean contains(Object o);

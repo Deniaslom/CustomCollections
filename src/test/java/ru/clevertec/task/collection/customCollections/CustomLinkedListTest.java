@@ -1,13 +1,14 @@
 package ru.clevertec.task.collection.customCollections;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.task.collection.customCollections.interfaces.CustomList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CustomArrayListTest {
-    private CustomList<String> list = new CustomArrayList<>();
+class CustomLinkedListTest {
+    private CustomList<String> list = new CustomLinkedList<>();
 
     @BeforeEach
     public void start() {

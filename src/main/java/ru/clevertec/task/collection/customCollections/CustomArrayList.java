@@ -31,6 +31,13 @@ public class CustomArrayList<E> implements CustomList<E> {
     }
 
     @Override
+    public void show() {
+        for(int i = 0; i < size; i++){
+            System.out.println(massiveObjects[i]);
+        }
+    }
+
+    @Override
     public int size() {
         return size;
     }
