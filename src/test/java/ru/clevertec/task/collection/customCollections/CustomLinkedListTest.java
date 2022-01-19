@@ -1,6 +1,5 @@
 package ru.clevertec.task.collection.customCollections;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.task.collection.customCollections.interfaces.CustomList;

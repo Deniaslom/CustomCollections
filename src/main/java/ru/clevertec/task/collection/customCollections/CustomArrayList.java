@@ -44,7 +44,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 
     @Override
     public boolean isEmpty() {
-        if (massiveObjects.length == 0) {
+        if (size == 0) {
             return true;
         }
         return false;
@@ -52,44 +52,42 @@ public class CustomArrayList<E> implements CustomList<E> {
 
     @Override
     public boolean contains(Object o) {
-        CustomIterator iterator = getIterator();
-        int index = 0;
-        boolean flag = false;
-
-        while (iterator.hasNext()) {
-            index++;
-            if (o.equals(iterator.next())) {
-                flag = true;
+        for(int i = 0; i < size; i++){
+            if(o.equals(massiveObjects[i])){
+                return true;
             }
         }
-
         return false;
     }
 
     @Override
     public void add(E e) {
-        CustomIterator iterator = getIterator();
         int index = 0;
-
-        while(iterator.hasNext()){
-            iterator.next();
+        boolean flag = true;
+        while(index < massiveObjects.length && flag){
+            if(massiveObjects[index] == null){
+                massiveObjects[index] = e;
+                flag = false;
+            }
+            if (size == massiveObjects.length){
+                ensureCapacity();
+            }
             index++;
-        }
-
-        if(index == massiveObjects.length){
-            ensureCapacity();
-            massiveObjects[index] = e;
-        } else {
-            massiveObjects[index] = e;
         }
     }
 
     @Override
     public void add(int index, E element) {
-        if (size == massiveObjects.length)
-            ensureCapacity();
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size " + index);
 
-        massiveObjects[size++] = element;
+        Object oldObjIndex = massiveObjects[index];
+        massiveObjects[index] = element;
+
+        for (; index <= size; index++) {
+            Object obj = massiveObjects[index+1];
+            massiveObjects[index+1] = oldObjIndex;
+        }
     }
 
     @Override
@@ -148,14 +146,18 @@ public class CustomArrayList<E> implements CustomList<E> {
 
             private int currentIndex = 0;
 
+
             @Override
             public boolean hasNext() {
-                return currentIndex < size && massiveObjects[currentIndex] != null;
+//                return currentIndex < size && massiveObjects[currentIndex] != null;
+                return false;
             }
 
             @Override
             public E next() {
-                return (E) massiveObjects[currentIndex++];
+                currentIndex++;
+//                return (E) massiveObjects[currentIndex++];
+                return (E) new Object();
             }
 
         };

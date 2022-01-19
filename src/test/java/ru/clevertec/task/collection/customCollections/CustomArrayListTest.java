@@ -21,6 +21,9 @@ class CustomArrayListTest {
     @Test
     public void checkTrueMethodContains() {
         assertTrue(list.contains("String 0"));
+        assertTrue(list.contains("String 1"));
+        assertTrue(list.contains("String 2"));
+        assertTrue(list.contains("String 3"));
     }
 
     @Test
@@ -28,24 +31,6 @@ class CustomArrayListTest {
         assertFalse(list.contains("String 6"));
     }
 
-    @Test
-    public void checkSize() {
-        assertTrue(list.size() == 4);
-    }
-
-    @Test
-    public void checkSizeAfterAddElements() {
-        list.add("String 7");
-        list.add("String 8");
-
-        assertTrue(list.size() == 6);
-    }
-
-    @Test
-    public void checkSizeAfterRemoveElement() {
-        list.remove(0);
-        assertTrue(list.size() == 3);
-    }
 
 
     @Test
