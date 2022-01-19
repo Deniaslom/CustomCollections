@@ -5,18 +5,33 @@ import ru.clevertec.task.collection.customCollections.interfaces.CustomList;
 
 import java.util.Arrays;
 
+/**
+ * A class that implements the CustomList interface. Custom version of ArrayList
+ * @autor Denis Shpadaruk
+ */
 public class CustomArrayList<E> implements CustomList<E> {
 
+    /** default capacity */
     private static final int DEFAULT_CAPACITY = 5;
 
+    /** array to store objects */
     private Object[] massiveObjects;
+
+    /** number of objects  */
     private int size;
 
+    /**
+     * Constructor - creating a new object
+     */
     public CustomArrayList() {
         this.massiveObjects = new Object[DEFAULT_CAPACITY];
         this.size = DEFAULT_CAPACITY;
     }
 
+    /**
+     * Constructor - creating a new object
+     * @param initialCapacity - size massive
+     */
     public CustomArrayList(int initialCapacity) {
         if (initialCapacity > 0) {
             this.massiveObjects = new Object[initialCapacity];
@@ -30,6 +45,9 @@ public class CustomArrayList<E> implements CustomList<E> {
         }
     }
 
+    /**
+     * display all elements
+     */
     @Override
     public void show() {
         for(int i = 0; i < size; i++){
@@ -37,11 +55,18 @@ public class CustomArrayList<E> implements CustomList<E> {
         }
     }
 
+    /**
+     * @return number of objects
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * check for emptiness
+     * @return boolean
+     */
     @Override
     public boolean isEmpty() {
         if (size == 0) {
@@ -50,6 +75,11 @@ public class CustomArrayList<E> implements CustomList<E> {
         return false;
     }
 
+    /**
+     * checking for the presence of an object in an array
+     * @param o check for this object
+     * @return true if found, false if otherwise
+     */
     @Override
     public boolean contains(Object o) {
         for(int i = 0; i < size; i++){
@@ -60,6 +90,10 @@ public class CustomArrayList<E> implements CustomList<E> {
         return false;
     }
 
+    /**
+     * adding an object
+     * @param e added object
+     */
     @Override
     public void add(E e) {
         int index = 0;
@@ -76,6 +110,9 @@ public class CustomArrayList<E> implements CustomList<E> {
         }
     }
 
+    /**
+     * adding object by index
+     */
     @Override
     public void add(int index, E element) {
         if (index < 0 || index > size)
@@ -90,6 +127,10 @@ public class CustomArrayList<E> implements CustomList<E> {
         }
     }
 
+    /**
+     * deleting an object by index
+     * * @return remote object
+     */
     @Override
     public E remove(int index) {
 
@@ -105,6 +146,9 @@ public class CustomArrayList<E> implements CustomList<E> {
         return removedElement;
     }
 
+    /**
+     * clears the array
+     */
     @Override
     public void clear() {
         for (int i = 0; i < size; i++)
@@ -113,6 +157,9 @@ public class CustomArrayList<E> implements CustomList<E> {
         size = 0;
     }
 
+    /**
+     * get object by index
+     */
     @Override
     public E get(int index) {
         if (index < 0 || index >= size) {
@@ -121,7 +168,12 @@ public class CustomArrayList<E> implements CustomList<E> {
         return (E) massiveObjects[index];
     }
 
-
+    /**
+     * replaces an object by index
+     * @param index - index in array
+     * @param element - object to replace
+     * @return
+     */
     @Override
     public E set(int index, E element) {
         if (index < 0 || index >= size)
@@ -132,14 +184,18 @@ public class CustomArrayList<E> implements CustomList<E> {
     }
 
 
-
-
+    /**
+     * increasing the size of the array
+     */
     private void ensureCapacity() {
         int newIncreasedCapacity = massiveObjects.length * 2;
         massiveObjects = Arrays.copyOf(massiveObjects, newIncreasedCapacity);
         size = massiveObjects.length;
     }
 
+    /**
+     * custom iterator that implements two methods hasNext() and next()
+     */
     @Override
     public CustomIterator<E> getIterator() {
         CustomIterator<E> iterator = new CustomIterator<E>() {
