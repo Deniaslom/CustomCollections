@@ -69,10 +69,7 @@ public class CustomArrayList<E> implements CustomList<E> {
      */
     @Override
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
+        return size == 0;
     }
 
     /**
@@ -82,6 +79,9 @@ public class CustomArrayList<E> implements CustomList<E> {
      */
     @Override
     public boolean contains(Object o) {
+        if(o == null)
+            throw new NullPointerException("object == null");
+
         for(int i = 0; i < size; i++){
             if(o.equals(massiveObjects[i])){
                 return true;
@@ -115,7 +115,7 @@ public class CustomArrayList<E> implements CustomList<E> {
      */
     @Override
     public void add(int index, E element) {
-        if (index < 0 || index > size)
+        if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException("Index: " + index + ", Size " + index);
 
         Object oldObjIndex = massiveObjects[index];
@@ -190,7 +190,6 @@ public class CustomArrayList<E> implements CustomList<E> {
     private void ensureCapacity() {
         int newIncreasedCapacity = massiveObjects.length * 2;
         massiveObjects = Arrays.copyOf(massiveObjects, newIncreasedCapacity);
-        size = massiveObjects.length;
     }
 
     /**
