@@ -210,8 +210,7 @@ public class CustomArrayList<E> implements CustomList<E> {
             @Override
             public E next() {
                 currentIndex++;
-//                return (E) massiveObjects[currentIndex++];
-                return (E) new Object();
+                return (E) massiveObjects[currentIndex++];
             }
 
         };
