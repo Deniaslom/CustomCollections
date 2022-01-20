@@ -1,7 +1,8 @@
-package ru.clevertec.task.collection.customCollections.interfaces;
-
-public interface CustomIterator<E> {
-
-    boolean hasNext();
-    E next();
-}
+//package ru.clevertec.task.collection.customCollections.interfaces;
+//
+//public interface CustomIterator<E> {
+//
+//    boolean hasNext();
+//    E next();
+//    void remove();
+//}

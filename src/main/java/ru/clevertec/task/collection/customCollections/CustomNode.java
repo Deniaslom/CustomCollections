@@ -11,7 +11,7 @@ public class CustomNode<E> {
     /**
      * Constructor which takes an int value which is stored as the data in this Node object.
      */
-    CustomNode(E data) {
+    public CustomNode(E data) {
         this.data = data;
     }
 

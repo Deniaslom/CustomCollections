@@ -2,12 +2,14 @@ package ru.clevertec.task.collection.customCollections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.clevertec.task.collection.customCollections.interfaces.CustomList;
+
+import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomArrayListTest {
-    private CustomList<String> list = new CustomArrayList<>();
+    private List<String> list = new CustomArrayList<>();
 
     @BeforeEach
     public void start() {
@@ -20,6 +22,10 @@ class CustomArrayListTest {
 
     @Test
     public void checkTrueMethodContains() {
+        for (String str : list){
+            System.out.println(str);
+        }
+
         assertTrue(list.contains("String 0"));
         assertTrue(list.contains("String 1"));
         assertTrue(list.contains("String 2"));

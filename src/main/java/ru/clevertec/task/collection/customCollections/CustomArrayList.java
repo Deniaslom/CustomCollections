@@ -1,15 +1,13 @@
 package ru.clevertec.task.collection.customCollections;
 
-import ru.clevertec.task.collection.customCollections.interfaces.CustomIterator;
-import ru.clevertec.task.collection.customCollections.interfaces.CustomList;
-
-import java.util.Arrays;
+import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * A class that implements the CustomList interface. Custom version of ArrayList
  * @autor Denis Shpadaruk
  */
-public class CustomArrayList<E> implements CustomList<E> {
+public class CustomArrayList<E> implements List<E> {
 
     /** default capacity */
     private static final int DEFAULT_CAPACITY = 5;
@@ -48,7 +46,6 @@ public class CustomArrayList<E> implements CustomList<E> {
     /**
      * display all elements
      */
-    @Override
     public void show() {
         for(int i = 0; i < size; i++){
             System.out.println(massiveObjects[i]);
@@ -93,9 +90,10 @@ public class CustomArrayList<E> implements CustomList<E> {
     /**
      * adding an object
      * @param e added object
+     * @return
      */
     @Override
-    public void add(E e) {
+    public boolean add(E e) {
         int index = 0;
         boolean flag = true;
         while(index < massiveObjects.length && flag){
@@ -109,7 +107,10 @@ public class CustomArrayList<E> implements CustomList<E> {
             }
             index++;
         }
+        return flag;
     }
+
+
 
     /**
      * adding object by index
@@ -193,28 +194,110 @@ public class CustomArrayList<E> implements CustomList<E> {
         massiveObjects = Arrays.copyOf(massiveObjects, newIncreasedCapacity);
     }
 
+///////////////////////////////////////
+    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<E> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+    @Override
+    public Iterator<E> iterator() {
+        return null;
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
+    }
+
+    @Override
+    public void forEach(Consumer<? super E> action) {
+//        Iterable.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<E> spliterator() {
+//        return Iterable.super.spliterator();
+        return null;
+    }
+
+///////////////////////////////////
+    @Override
+    public boolean remove(Object o) {
+
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends E> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    /////////////////////////////////////////////////////////////
     /**
      * custom iterator that implements two methods hasNext() and next()
      */
-    @Override
-    public CustomIterator<E> getIterator() {
-        CustomIterator<E> iterator = new CustomIterator<E>() {
+    private class MyArrayListIterator<E> implements Iterator<E> {
+        private int currentIndex = 0;
 
-            private int currentIndex = 0;
+        public MyArrayListIterator() {
+        }
 
+        public boolean hasNext() {
+            return currentIndex < size;
+        }
 
-            @Override
-            public boolean hasNext() {
-                return currentIndex < size;
-            }
-
-            @Override
-            public E next() {
-                currentIndex++;
+        public E next() {
+            currentIndex++;
                 return (E) massiveObjects[currentIndex++];
-            }
+        }
 
-        };
-        return iterator;
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }
