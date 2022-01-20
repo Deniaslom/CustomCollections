@@ -25,7 +25,7 @@ public class CustomArrayList<E> implements CustomList<E> {
      */
     public CustomArrayList() {
         this.massiveObjects = new Object[DEFAULT_CAPACITY];
-        this.size = DEFAULT_CAPACITY;
+        size = 0;
     }
 
     /**
@@ -101,9 +101,11 @@ public class CustomArrayList<E> implements CustomList<E> {
         while(index < massiveObjects.length && flag){
             if(massiveObjects[index] == null){
                 massiveObjects[index] = e;
+                size++;
                 flag = false;
             }
             if (size == massiveObjects.length){
+                System.out.println(3);
                 ensureCapacity();
             }
             index++;

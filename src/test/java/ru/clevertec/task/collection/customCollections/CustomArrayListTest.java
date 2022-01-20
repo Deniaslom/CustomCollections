@@ -31,7 +31,23 @@ class CustomArrayListTest {
         assertFalse(list.contains("String 6"));
     }
 
+    @Test
+    public void checkSize(){
+        assertTrue(list.size() == 4);
+    }
 
+    @Test
+    public void checkSizeAfterRemoveElement(){
+        list.remove(1);
+        assertTrue(list.size() == 3);
+    }
+
+    @Test
+    public void checkSizeAfterAddElement(){
+        list.add("String add");
+        list.add("String add 2");
+        assertTrue(list.size() == 6);
+    }
 
     @Test
     public void checkIsEmpty() {
