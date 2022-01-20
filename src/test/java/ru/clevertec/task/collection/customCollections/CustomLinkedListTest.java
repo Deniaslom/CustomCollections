@@ -31,6 +31,14 @@ class CustomLinkedListTest {
     }
 
     @Test
+    public void checkGetById(){
+        assertTrue(list.get(0).equals("String 0"));
+        assertTrue(list.get(1).equals("String 1"));
+        assertTrue(list.get(2).equals("String 2"));
+        assertTrue(list.get(3).equals("String 3"));
+    }
+
+    @Test
     public void checkFalseMethodContains() {
         assertFalse(list.contains("String 6"));
     }

@@ -11,6 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         List lst = new LinkedList();
+        List lst2 = new ArrayList();
         List arr = new CustomArrayList();
         arr.add("str");
         arr.add("str");

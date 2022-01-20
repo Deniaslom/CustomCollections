@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 /**
  * A class that implements the CustomList interface. Custom version of ArrayList
+ *
  * @autor Denis Shpadaruk
  */
 public class CustomArrayList<E> implements List<E> {
@@ -12,43 +13,33 @@ public class CustomArrayList<E> implements List<E> {
     /** default capacity */
     private static final int DEFAULT_CAPACITY = 5;
 
-    /** array to store objects */
-    private Object[] massiveObjects;
+    /**  array to store objects */
+    private E[] massiveObjects;
 
-    /** number of objects  */
+    /** number of objects */
     private int size;
 
-    /**
-     * Constructor - creating a new object
-     */
+    /** Constructor - creating a new object */
     public CustomArrayList() {
-        this.massiveObjects = new Object[DEFAULT_CAPACITY];
+        this.massiveObjects = (E[]) new Object[DEFAULT_CAPACITY];
         size = 0;
     }
 
     /**
      * Constructor - creating a new object
+     *
      * @param initialCapacity - size massive
      */
     public CustomArrayList(int initialCapacity) {
         if (initialCapacity > 0) {
-            this.massiveObjects = new Object[initialCapacity];
+            this.massiveObjects = (E[]) new Object[initialCapacity];
             this.size = initialCapacity;
         } else if (initialCapacity == 0) {
-            this.massiveObjects = new Object[]{};
+            this.massiveObjects = (E[]) new Object[]{};
             this.size = 0;
         } else {
             throw new IllegalArgumentException("negative initial capacity: " +
                     initialCapacity);
-        }
-    }
-
-    /**
-     * display all elements
-     */
-    public void show() {
-        for(int i = 0; i < size; i++){
-            System.out.println(massiveObjects[i]);
         }
     }
 
@@ -62,6 +53,7 @@ public class CustomArrayList<E> implements List<E> {
 
     /**
      * check for emptiness
+     *
      * @return boolean
      */
     @Override
@@ -71,16 +63,17 @@ public class CustomArrayList<E> implements List<E> {
 
     /**
      * checking for the presence of an object in an array
+     *
      * @param o check for this object
      * @return true if found, false if otherwise
      */
     @Override
     public boolean contains(Object o) {
-        if(o == null)
+        if (o == null)
             throw new NullPointerException("object == null");
 
-        for(int i = 0; i < size; i++){
-            if(o.equals(massiveObjects[i])){
+        for (int i = 0; i < size; i++) {
+            if (o.equals(massiveObjects[i])) {
                 return true;
             }
         }
@@ -89,6 +82,7 @@ public class CustomArrayList<E> implements List<E> {
 
     /**
      * adding an object
+     *
      * @param e added object
      * @return
      */
@@ -96,20 +90,19 @@ public class CustomArrayList<E> implements List<E> {
     public boolean add(E e) {
         int index = 0;
         boolean flag = true;
-        while(index < massiveObjects.length && flag){
-            if(massiveObjects[index] == null){
+        while (index < massiveObjects.length && flag) {
+            if (massiveObjects[index] == null) {
                 massiveObjects[index] = e;
                 size++;
                 flag = false;
             }
-            if (size == massiveObjects.length){
+            if (size == massiveObjects.length) {
                 ensureCapacity();
             }
             index++;
         }
         return flag;
     }
-
 
 
     /**
@@ -120,13 +113,19 @@ public class CustomArrayList<E> implements List<E> {
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException("Index: " + index + ", Size " + index);
 
-        Object oldObjIndex = massiveObjects[index];
+        E oldObjByIndex = massiveObjects[index];
         massiveObjects[index] = element;
 
-        for (; index <= size; index++) {
-            Object obj = massiveObjects[index+1];
-            massiveObjects[index+1] = oldObjIndex;
+        while (index <= size) {
+            if (index + 1 == massiveObjects.length)
+                ensureCapacity();
+
+            E objByIndexInc = massiveObjects[index + 1];
+            massiveObjects[index + 1] = oldObjByIndex;
+            oldObjByIndex = objByIndexInc;
+            index++;
         }
+        size++;
     }
 
     /**
@@ -146,6 +145,25 @@ public class CustomArrayList<E> implements List<E> {
         }
         size--;
         return removedElement;
+    }
+
+    /**
+     * deleting an object by object
+     * * @return success(true if deleted otherwise false)
+     */
+    @Override
+    public boolean remove(Object o) {
+        if (o == null)
+            throw new NullPointerException("target object == null");
+
+        for (int index = 0; index < size; index++) {
+            if (o.equals(massiveObjects[index])) {
+                remove(index);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -172,7 +190,8 @@ public class CustomArrayList<E> implements List<E> {
 
     /**
      * replaces an object by index
-     * @param index - index in array
+     *
+     * @param index   - index in array
      * @param element - object to replace
      * @return
      */
@@ -194,90 +213,61 @@ public class CustomArrayList<E> implements List<E> {
         massiveObjects = Arrays.copyOf(massiveObjects, newIncreasedCapacity);
     }
 
-///////////////////////////////////////
+    /**
+     * Returns the index of the first found object
+     *
+     * @param o desired object
+     * @return from 0 and above - the index of the found first object. If -1 then object not found
+     */
     @Override
     public int indexOf(Object o) {
-        return 0;
+        if (o == null)
+            throw new NullPointerException("object == null");
+
+        for (int index = 0; index < size; index++) {
+            if (massiveObjects[index].equals(o))
+                return index;
+        }
+        return -1;
     }
 
+    /**
+     * Returns the index of the last found object
+     *
+     * @param o desired object
+     * @return from 0 and above - the index of the found last object. If -1 then object not found
+     */
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        int findIndex = -1;
+        if (o == null)
+            throw new NullPointerException("object == null");
+
+        for (int index = 0; index < size; index++) {
+            if (massiveObjects[index].equals(o))
+                findIndex = index;
+        }
+        return findIndex;
     }
 
-    @Override
-    public ListIterator<E> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<E> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        return null;
-    }
+    /**
+     * Returns a custom iterator for the foreach operator
+     */
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new MyArrayListIterator<>();
     }
 
+    /**
+     * returns Object[] of the given collection
+     *
+     * @return
+     */
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return Arrays.copyOf(massiveObjects, size);
     }
 
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-    @Override
-    public void forEach(Consumer<? super E> action) {
-//        Iterable.super.forEach(action);
-    }
-
-    @Override
-    public Spliterator<E> spliterator() {
-//        return Iterable.super.spliterator();
-        return null;
-    }
-
-///////////////////////////////////
-    @Override
-    public boolean remove(Object o) {
-
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    /////////////////////////////////////////////////////////////
     /**
      * custom iterator that implements two methods hasNext() and next()
      */
@@ -292,12 +282,79 @@ public class CustomArrayList<E> implements List<E> {
         }
 
         public E next() {
-            currentIndex++;
-                return (E) massiveObjects[currentIndex++];
+            return (E) massiveObjects[currentIndex++];
         }
 
         public void remove() {
             throw new UnsupportedOperationException();
         }
     }
+
+
+    //Not implemented
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
+    }
+
+    //Not implemented
+    @Override
+    public ListIterator<E> listIterator() {
+        return null;
+    }
+
+    //Not implemented
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        return null;
+    }
+
+    //Not implemented
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+
+    //Not implemented
+    @Override
+    public void forEach(Consumer<? super E> action) {
+    }
+
+    //Not implemented
+    @Override
+    public Spliterator<E> spliterator() {
+        return null;
+    }
+
+    //Not implemented
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    //Not implemented
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        return false;
+    }
+
+    //Not implemented
+    @Override
+    public boolean addAll(int index, Collection<? extends E> c) {
+        return false;
+    }
+
+    //Not implemented
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    //Not implemented
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+
 }
