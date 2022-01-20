@@ -105,7 +105,6 @@ public class CustomArrayList<E> implements CustomList<E> {
                 flag = false;
             }
             if (size == massiveObjects.length){
-                System.out.println(3);
                 ensureCapacity();
             }
             index++;
@@ -206,7 +205,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 
             @Override
             public boolean hasNext() {
-                return currentIndex < size && massiveObjects[currentIndex] != null;
+                return currentIndex < size;
             }
 
             @Override
