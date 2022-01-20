@@ -6,7 +6,10 @@ package ru.clevertec.task.collection.customCollections;
  */
 public class CustomNode<E> {
     private E data;
-    private CustomNode next;
+    private CustomNode<E> next;
+
+    public CustomNode() {
+    }
 
     /**
      * Constructor which takes an int value which is stored as the data in this Node object.
