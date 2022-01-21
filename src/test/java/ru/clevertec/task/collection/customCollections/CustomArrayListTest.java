@@ -48,7 +48,7 @@ class CustomArrayListTest {
     public void checkSizeAfterAddElement() {
         list.add("String add 1");
         list.add("String add 2");
-        assertTrue(list.size() == 12);
+        assertTrue(list.size() == 6);
     }
 
     @Test
@@ -95,6 +95,35 @@ class CustomArrayListTest {
         );
     }
 
+    @Test
+    public void checkIndexOf(){
+        assertAll(() -> assertTrue(list.indexOf("String 0") == 0),
+                () -> assertTrue(list.indexOf("String 1") == 1),
+                () -> assertTrue(list.indexOf("String 2") == 2),
+                () -> assertTrue(list.indexOf("String 3") == 3),
+                () -> assertFalse(list.indexOf("String 4") == 4)
+        );
+    }
 
+    @Test
+    public void checkLastIndexOf(){
+        list.add("String 2");
+        assertTrue(list.lastIndexOf("String 2") == 4);
+    }
 
+    @Test
+    public void checkSizeAndGetAfterRemoveByObjects(){
+        list.remove("String 0");
+        list.remove("String 1");
+        assertTrue(list.size() == 2);
+        assertTrue(list.get(0).equals("String 2"));
+        assertTrue(list.get(1).equals("String 3"));
+    }
+
+    @Test
+    public void checkForEach(){
+        for(String str : list){
+            System.out.println(str);
+        }
+    }
 }
