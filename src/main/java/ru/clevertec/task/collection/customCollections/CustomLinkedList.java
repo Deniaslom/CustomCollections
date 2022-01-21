@@ -8,7 +8,7 @@ import java.util.*;
  * @author Denis Shpadaruk
  */
 public class CustomLinkedList<E> implements List<E> {
-
+    
     private CustomNode<E> node;
 
     /**
