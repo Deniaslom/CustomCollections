@@ -10,13 +10,16 @@ import java.util.function.Consumer;
  */
 public class CustomArrayList<E> implements List<E> {
 
-    /** default capacity */
+    /**
+     * default capacity
+     */
     private static final int DEFAULT_CAPACITY = 5;
 
     /**  array to store objects */
     private E[] massiveObjects;
 
     /** number of objects */
+
     private int size;
 
     /** Constructor - creating a new object */
@@ -124,6 +127,7 @@ public class CustomArrayList<E> implements List<E> {
             massiveObjects[index + 1] = oldObjByIndex;
             oldObjByIndex = objByIndexInc;
             index++;
+
         }
         size++;
     }
@@ -219,6 +223,7 @@ public class CustomArrayList<E> implements List<E> {
      * @param o desired object
      * @return from 0 and above - the index of the found first object. If -1 then object not found
      */
+
     @Override
     public int indexOf(Object o) {
         if (o == null)
@@ -301,6 +306,7 @@ public class CustomArrayList<E> implements List<E> {
     @Override
     public ListIterator<E> listIterator() {
         return null;
+
     }
 
     //Not implemented
@@ -327,6 +333,7 @@ public class CustomArrayList<E> implements List<E> {
     }
 
     //Not implemented
+
     @Override
     public boolean containsAll(Collection<?> c) {
         return false;
@@ -355,6 +362,4 @@ public class CustomArrayList<E> implements List<E> {
     public boolean retainAll(Collection<?> c) {
         return false;
     }
-
-
 }
