@@ -21,9 +21,6 @@ class CustomLinkedListTest {
 
     @Test
     public void checkTrueMethodContains() {
-        for (String str : list){
-            System.out.println(str);
-        }
         assertTrue(list.contains("String 0"));
         assertTrue(list.contains("String 1"));
         assertTrue(list.contains("String 2"));
@@ -77,5 +74,43 @@ class CustomLinkedListTest {
     public void checkAddAndContains() {
         list.add("String 10");
         assertTrue(list.contains("String 10"));
+    }
+
+    @Test
+    public void checkIndexOf(){
+        System.out.println(list.indexOf("String 0"));
+        System.out.println(list.indexOf("String 1"));
+        System.out.println(list.indexOf("String 2"));
+        System.out.println(list.indexOf("String 3"));
+        System.out.println(list.indexOf("String 4"));
+
+        assertAll(() -> assertTrue(list.indexOf("String 0") == 0),
+                () -> assertTrue(list.indexOf("String 1") == 1),
+                () -> assertTrue(list.indexOf("String 2") == 2),
+                () -> assertTrue(list.indexOf("String 3") == 3),
+                () -> assertFalse(list.indexOf("String 4") == 4)
+        );
+    }
+
+    @Test
+    public void checkLastIndexOf(){
+        list.add("String 2");
+        assertTrue(list.lastIndexOf("String 2") == 4);
+    }
+
+    @Test
+    public void checkSizeAndGetAfterRemoveByObjects(){
+        list.remove("String 0");
+        list.remove("String 1");
+        assertTrue(list.size() == 2);
+        assertTrue(list.get(0).equals("String 2"));
+        assertTrue(list.get(1).equals("String 3"));
+    }
+
+    @Test
+    public void checkForEach(){
+        for(String str : list){
+            System.out.println(str);
+        }
     }
 }

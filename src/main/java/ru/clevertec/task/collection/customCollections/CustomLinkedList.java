@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * A class that implements the CustomList interface. Custom version of LinkedList *
  *
- * @autor Denis Shpadaruk
+ * @author Denis Shpadaruk
  */
 public class CustomLinkedList<E> implements List<E> {
 
@@ -18,31 +18,15 @@ public class CustomLinkedList<E> implements List<E> {
     }
 
     /**
-     * display all elements
-     */
-    public void show() {
-        CustomNode currentNode = node;
-        if (currentNode == null) {
-            System.out.println("Linked list is empty");
-        } else {
-            while (currentNode != null) {
-                System.out.print(currentNode.getData() + " ");
-                currentNode = currentNode.getNext();
-            }
-        }
-    }
-
-    /**
      * @return number of objects
      */
     @Override
     public int size() {
         int size = 0;
-        MyLinkedListIterator itr = new MyLinkedListIterator(node);
+        Iterator itr = new MyLinkedListIterator(node);
 
-        if (!isEmpty()) {
+        if (!isEmpty())
             size++;
-        }
 
         while (itr.hasNext()) {
             itr.next();
@@ -73,13 +57,11 @@ public class CustomLinkedList<E> implements List<E> {
     @Override
     public boolean contains(Object o) {
         MyLinkedListIterator itr = new MyLinkedListIterator(node);
-        if (isEmpty()) {
+        if (isEmpty())
             return false;
-        }
 
-        if (node.getData().equals(o)) {
+        if (node.getData().equals(o))
             return true;
-        }
 
         while (itr.hasNext()) {
             CustomNode findNode = (CustomNode) itr.next();
@@ -88,27 +70,6 @@ public class CustomLinkedList<E> implements List<E> {
             }
         }
         return false;
-    }
-
-    /**
-     * @return an iterator over the elements in this list in proper sequence
-     */
-    @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
-
-            int counter = 0;
-
-            @Override
-            public boolean hasNext() {
-                return counter < size();
-            }
-
-            @Override
-            public E next() {
-                return get(counter++);
-            }
-        };
     }
 
     /**
@@ -177,6 +138,27 @@ public class CustomLinkedList<E> implements List<E> {
     }
 
     /**
+     * deleting an object by object
+     * * @return success(true if deleted otherwise false)
+     */
+    @Override
+    public boolean remove(Object o) {
+        MyLinkedListIterator itr = new MyLinkedListIterator(node);
+
+        if (o == null)
+            throw new NullPointerException("object == null");
+
+        for (int index = 0; index < size(); index++) {
+            if (o.equals(get(index))) {
+                remove(index);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * get object by index
      */
     @Override
@@ -185,7 +167,7 @@ public class CustomLinkedList<E> implements List<E> {
         CustomNode targetNode = node;
         if (index >= 0 && index < size()) {
             for (int i = 0; i <= index; i++) {
-                if(index == i) {
+                if (index == i) {
                     return (E) targetNode.getData();
                 }
                 targetNode = (CustomNode) itr.next();
@@ -193,7 +175,6 @@ public class CustomLinkedList<E> implements List<E> {
         }
         return (E) targetNode.getData();
     }
-
 
 
     /**
@@ -235,128 +216,168 @@ public class CustomLinkedList<E> implements List<E> {
         }
     }
 
+    /**
+     * Returns the index of the first found object
+     *
+     * @param o desired object
+     * @return from 0 and above - the index of the found first object. If -1 then object not found
+     */
     @Override
     public int indexOf(Object o) {
-        return 0;
+        MyLinkedListIterator itr = new MyLinkedListIterator(node);
+        CustomNode findNode = node;
+        if (o == null)
+            throw new NullPointerException("object == null");
+
+        for (int index = 0; index < size(); index++) {
+            if (findNode.getData().equals(o))
+                return index;
+
+            findNode = (CustomNode) itr.next();
+        }
+
+        return -1;
     }
 
+    /**
+     * Returns the index of the last found object
+     *
+     * @param o desired object
+     * @return from 0 and above - the index of the found last object. If -1 then object not found
+     */
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        MyLinkedListIterator itr = new MyLinkedListIterator(node);
+        CustomNode findNode = node;
+        int lastIndex = -1;
+        if (o == null)
+            throw new NullPointerException("object == null");
+
+        for (int index = 0; index < size(); index++) {
+            if (findNode.getData().equals(o))
+                lastIndex = index;
+
+            findNode = (CustomNode) itr.next();
+        }
+
+        return lastIndex;
     }
 
+
+    /**
+     * @return Object[] of the given collection
+     */
+    @Override
+    public Object[] toArray() {
+        Object[] result = new Object[size()];
+
+        for(int index = 0; index < size(); index++){
+            result[index] = get(index);
+        }
+
+        return result;
+    }
+
+    /**
+     * @return an iterator over the elements in this list in proper sequence
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+
+            int counter = 0;
+
+            @Override
+            public boolean hasNext() {
+                return counter < size();
+            }
+
+            @Override
+            public E next() {
+                return get(counter++);
+            }
+        };
+    }
+
+
+    private class MyLinkedListIterator<E> implements Iterator<E> {
+        private CustomNode<E> targetNode;
+
+        public MyLinkedListIterator(CustomNode node) {
+            this.targetNode = node;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (targetNode.getNext() != null)
+                return true;
+            else
+                return false;
+        }
+
+        @Override
+        public E next() {
+            targetNode = targetNode.getNext();
+            return (E) targetNode;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    //Not implemented
     @Override
     public ListIterator<E> listIterator() {
-        return (ListIterator<E>) new MyLinkedListIterator<E>(node);
-    }
-
-private class MyLinkedListIterator<E> implements ListIterator<E> {
-    private CustomNode<E> targetNode;
-
-    public MyLinkedListIterator() {
-    }
-
-    public MyLinkedListIterator(CustomNode node) {
-        this.targetNode = node;
-    }
-
-    @Override
-    public boolean hasNext() {
-        if (targetNode.getNext() != null)
-            return true;
-        else
-            return false;
-    }
-
-    @Override
-    public E next() {
-        targetNode = targetNode.getNext();
-        return (E) targetNode;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean hasPrevious() {
-        return false;
-    }
-
-    @Override
-    public E previous() {
         return null;
     }
 
-    @Override
-    public int nextIndex() {
-        return 0;
-    }
-
-    @Override
-    public int previousIndex() {
-        return 0;
-    }
-
-    @Override
-    public void set(E e) {
-    }
-
-    @Override
-    public void add(E e) {
-    }
-
-}
-
+    //Not implemented
     @Override
     public ListIterator<E> listIterator(int index) {
         return null;
     }
 
+    //Not implemented
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         return null;
     }
 
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
+    //Not implemented
     @Override
     public boolean containsAll(Collection<?> c) {
         return false;
     }
 
+    //Not implemented
     @Override
     public boolean addAll(Collection<? extends E> c) {
         return false;
     }
 
+    //Not implemented
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
         return false;
     }
 
+    //Not implemented
     @Override
     public boolean removeAll(Collection<?> c) {
         return false;
     }
 
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
+    //Not implemented
     @Override
     public <T> T[] toArray(T[] a) {
         return null;
+    }
+
+    //Not implemented
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
     }
 }

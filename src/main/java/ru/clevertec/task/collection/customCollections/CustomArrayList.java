@@ -10,16 +10,13 @@ import java.util.function.Consumer;
  */
 public class CustomArrayList<E> implements List<E> {
 
-    /**
-     * default capacity
-     */
+    /** default capacity */
     private static final int DEFAULT_CAPACITY = 5;
 
     /**  array to store objects */
     private E[] massiveObjects;
 
     /** number of objects */
-
     private int size;
 
     /** Constructor - creating a new object */
@@ -223,7 +220,6 @@ public class CustomArrayList<E> implements List<E> {
      * @param o desired object
      * @return from 0 and above - the index of the found first object. If -1 then object not found
      */
-
     @Override
     public int indexOf(Object o) {
         if (o == null)
@@ -264,9 +260,7 @@ public class CustomArrayList<E> implements List<E> {
     }
 
     /**
-     * returns Object[] of the given collection
-     *
-     * @return
+     * @return Object[] of the given collection
      */
     @Override
     public Object[] toArray() {
