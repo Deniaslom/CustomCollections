@@ -119,11 +119,4 @@ class CustomArrayListTest {
         assertTrue(list.get(0).equals("String 2"));
         assertTrue(list.get(1).equals("String 3"));
     }
-
-    @Test
-    public void checkForEach(){
-        for(String str : list){
-            System.out.println(str);
-        }
-    }
 }
